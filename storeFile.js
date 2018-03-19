@@ -1,7 +1,7 @@
 var mongo = require('mongodb'),
     MongoClient = require('mongodb').MongoClient,
     Grid = require('gridfs-stream');
-    fs = require('fs')  // file system module
+fs = require('fs')  // file system module
 
 var fileToStore = 'MetLife Testimonial.mov'
 
@@ -14,7 +14,10 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 
     // streaming to gridfs
     var writestream = gfs.createWriteStream({
-        filename: fileToStore
+        filename: fileToStore,
+        metadata: {
+            description: 'A testimonial from MetLife on their success with MongoDB'
+        }
     });
 
     fs.createReadStream('./input/' + fileToStore).pipe(writestream);
